@@ -4,7 +4,7 @@ ShowOnPages's changelog
 
 0.1.1 (September 9th, 2012)
 -------------------------------------------------
-* Added Italian language file.
+* Added Dutch and Italian language files.
 * Fixed an issue where editing an entry didn't always work.
 * Fixed an issue where deleting an entry didn't always work.
 * Fixed a typo in the README file.
