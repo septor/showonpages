@@ -4,7 +4,7 @@ ShowOnPages allows you to display code on every page of your e107 installation. 
 
 ## How To Use
 
-Using ShowOnPages is extremely easy and requires very little effort. Follow the below steps to create a simple Contnet Code Listing:
+Using ShowOnPages is extremely easy and requires very little effort. Follow the below steps to create a simple Content Code Listing:
 
 1. Navigate to the configuration page.
 2. Enter the code you want to display in the `<head>` section of your site in the `Content Code` box.

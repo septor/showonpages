@@ -17,7 +17,7 @@ if(e_QUERY){
 
 if(isset($_POST['addcontent'])){
 	$pages = ($_POST['pages'][0] == "*" ? "*" : $tp->toDB($_POST['pages']));
-	$message = ($sql->db_Insert("showonpages_content", "'', '".$tp->toDB($_POST['code'])."', '".$tp->toDB($_POST['description'])."', '".$pages."', '".intval($_POST['userclass'])."'")) ? SOPLAN_CONFIG_01 : SOPLAN_CONFIG_02;
+	$message = ($sql->db_Insert("showonpages_content", "NULL, '".$tp->toDB($_POST['code'])."', '".$tp->toDB($_POST['description'])."', '".$pages."', '".intval($_POST['userclass'])."'")) ? SOPLAN_CONFIG_01 : SOPLAN_CONFIG_02;
 }
 
 if(isset($_POST['editcontent'])){
@@ -106,15 +106,17 @@ if($sql->db_Count("showonpages_content", "(*)") > 0){
 			</tr>
 			</form>";
 		}else{
-			$list .= "<tr>
+			$list .= "<form method='post' action='".e_SELF."'>
+			<tr>
 			<td class='forumheader3' style='text-align:center;'>".$row['id']."</td>
 			<td class='forumheader3' style='text-align:center;'><a onclick='expandit(\"sopcc_".$row['id']."\");'>".$row['description']."</a><div id='sopcc_".$row['id']."' style='display:none;'><textarea style='height:".(strlen($row['code']) / 2)."px;' class='tbox'>".$tp->toForm($row['code'])."</textarea></div></td>
 			<td class='forumheader3'>".$row['pages']."</td>
 			<td class='forumheader3' style='text-align:center;'>
-			<a href='".e_SELF."?edit.".$row['id']."'>".ADMIN_EDIT_ICON."</a> 
+			<a href='".e_SELF."?edit.".$row['id']."'>".ADMIN_EDIT_ICON."</a>
 			<input type='image' title='".LAN_DELETE."' name='main_delete[".$row['id']."]' src='".e_PLUGIN."showonpages/images/delete_16.png' onclick=\"return jsconfirm('".SOPLAN_CONFIG_25." [ID: ".$row['id']." ]')\"/>
 			</td>
-			</tr>";
+			</tr>
+			</form>";
 		}
 	}
 }else{

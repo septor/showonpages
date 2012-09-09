@@ -3,7 +3,7 @@ include_lan(e_PLUGIN."showonpages/languages/".e_LANGUAGE.".php");
 
 // -- [ PLUGIN INFO ]
 $eplug_name			= "ShowOnPages";
-$eplug_version		= "0.1.0";
+$eplug_version		= "0.1.1";
 $eplug_author		= "Patrick Weaver";
 $eplug_url			= "http://trickmod.com/";
 $eplug_email		= "patrickweaver@gmail.com";
