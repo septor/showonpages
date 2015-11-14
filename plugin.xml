@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e107Plugin name="ShowOnPages" lan="" version="1.0" date="2015-11-14" compatibility="2.0" installRequired="true" >
+	<author name="Patrick Weaver" url="http://trickmod.com" />
+	<summary lan="">Shows code on a page. Or many pages.</summary>
+	<description lan="">Display code on any page, every page, or only one page to a defined userclass.</description>
+	<keywords>
+		<word>everypage</word>
+		<word>code</word>
+	</keywords>
+	<category>content</category>
+	<copyright>2015</copyright>
+	<adminLinks>
+		<link url="admin_config.php" description="" icon="" iconSmall="" primary="true" >LAN_CONFIGURE</link>
+	</adminLinks>
+</e107Plugin>

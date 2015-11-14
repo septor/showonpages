@@ -1,134 +1,201 @@
 <?php
-
-if(!defined("e107_INIT")) {
-	require_once("../../class2.php");
-}
-if(!getperms("P")){ header("location:".e_BASE."index.php"); exit;}
-require_once(e_ADMIN."auth.php");
-require_once(e_HANDLER.'userclass_class.php');
-include_lan(e_PLUGIN."showonpages/languages/".e_LANGUAGE.".php");
-
-if(e_QUERY){
-	$tmp = explode('.', e_QUERY);
-	$action = $tmp[0];
-	$id = $tmp[1];
-	unset($tmp);
+/*
+ * ShowOnPages - A code displaying plugin for e107
+ *
+ * Copyright (C) 2012-2015 Patrick Weaver (http://trickmod.com/)
+ * For additional information refer to the README.mkd file.
+ *
+ */
+require_once('../../class2.php');
+if (!getperms('P'))
+{
+	header('location:'.e_BASE.'index.php');
+	exit;
 }
 
-if(isset($_POST['addcontent'])){
-	$pages = ($_POST['pages'][0] == "*" ? "*" : $tp->toDB($_POST['pages']));
-	$message = ($sql->db_Insert("showonpages_content", "NULL, '".$tp->toDB($_POST['code'])."', '".$tp->toDB($_POST['description'])."', '".$pages."', '".intval($_POST['userclass'])."'")) ? SOPLAN_CONFIG_01 : SOPLAN_CONFIG_02;
+class showonpages_adminArea extends e_admin_dispatcher
+{
+	protected $modes = array(
+		'main'	=> array(
+			'controller' 	=> 'showonpages_content_ui',
+			'path' 			=> null,
+			'ui' 			=> 'showonpages_content_form_ui',
+			'uipath' 		=> null
+		),
+	);
+
+	protected $adminMenu = array(
+		'main/list'			=> array('caption'=> 'Manage Content Codes', 'perm' => 'P'),
+		'main/create'		=> array('caption'=> 'Create New Content Code', 'perm' => 'P'),
+	);
+
+	protected $adminMenuAliases = array(
+		'main/edit'	=> 'main/list'
+	);
+
+	protected $menuTitle = 'ShowOnPages';
 }
 
-if(isset($_POST['editcontent'])){
-	$pages = ($_POST['pages'][0] == "*" ? "*" : $tp->toDB($_POST['pages']));
-	$message = ($sql->db_Update("showonpages_content", "code='".$tp->toDB($_POST['code'])."', description='".$tp->toDB($_POST['description'])."', pages='".$pages."', userclass='".intval($_POST['userclass'])."' WHERE id=".intval($_POST['id']))) ? SOPLAN_CONFIG_03 : SOPLAN_CONFIG_04;
-}
+class showonpages_content_ui extends e_admin_ui
+{
+	protected $pluginTitle		= 'ShowOnPages';
+	protected $pluginName		= 'showonpages';
+	//	protected $eventName		= 'showonpages-showonpages_content'; // remove comment to enable event triggers in admin.
+	protected $table			= 'showonpages_content';
+	protected $pid				= 'id';
+	protected $perPage			= 10;
+	protected $batchDelete		= true;
+	//	protected $batchCopy		= true;
+	//	protected $sortField		= 'somefield_order';
+	//	protected $orderStep		= 10;
+	//	protected $tabs				= array('Tabl 1','Tab 2'); // Use 'tab'=>0  OR 'tab'=>1 in the $fields below to enable.
 
-if(isset($_POST['main_delete'])){
-	$delete_id = array_keys($_POST['main_delete']);
-	$message = ($sql2->db_Delete("showonpages_content", "id=".intval($delete_id[0]))) ? SOPLAN_CONFIG_05 : SOPLAN_CONFIG_06;
-}
+	//	protected $listQry      	= "SELECT * FROM `#tableName` WHERE field != '' "; // Example Custom Query. LEFT JOINS allowed. Should be without any Order or Limit.
 
-if(isset($message)){
-	$ns->tablerender("", "<div style='text-align:center'><b>".$message."</b></div>");
-}
+	protected $listOrder		= 'id DESC';
 
-$add = "<div style='text-align:center'>
-<form method='post' action='".e_SELF."'>
-<table style='width:75%' class='fborder'>
-<tr>
-<td style='width:50%' class='forumheader3'>".SOPLAN_CONFIG_07."<br /><br /><i>".SOPLAN_CONFIG_08."<br /><br />".SOPLAN_CONFIG_09."</td>
-<td style='width:50%; text-align:right' class='forumheader3'>
-<textarea style='height: 150px;' class='tbox' name='code'></textarea>
-</td>
-</tr>
-<tr>
-<td style='width:50%' class='forumheader3'>".SOPLAN_CONFIG_10."<br /><br /><i>".SOPLAN_CONFIG_11."</i></td>
-<td style='width:50%; text-align:right' class='forumheader3'>
-<input type='text' name='description' class='tbox' style='width: 90%;' />
-</td>
-</tr>
-<tr>
-<td style='width:50%' class='forumheader3'>".SOPLAN_CONFIG_12."<br /><br /><i>".SOPLAN_CONFIG_13."<br />".SOPLAN_CONFIG_14."<br />".SOPLAN_CONFIG_15."<br /><br />".SOPLAN_CONFIG_16."</i></td>
-<td style='width:50%; text-align:right' class='forumheader3'>
-<input type='text' name='pages' class='tbox' style='width: 90%;' />
-</td>
-</tr>
-<tr>
-<td style='width:50%' class='forumheader3'>".SOPLAN_CONFIG_17."<br /><br /><i>".SOPLAN_CONFIG_18."</i></td>
-<td style='width:50%; text-align:right' class='forumheader3'>
-".r_userclass('userclass', 0, 'off', 'public,nobody,guest,member,admin,main,classes')."
-</td>
-</tr>
-<tr>
-<td colspan='2' style='text-align:center' class='forumheader'>
-<input class='button' type='submit' name='addcontent' value='".SOPLAN_CONFIG_19."' />
-</td>
-</tr>
-</table>
-</form>
-</div>";
+	protected $fields = array (
+		'checkboxes' =>  array (
+			'title' => '',
+			'type' => null,
+			'data' => null,
+			'width' => '5%',
+			'thclass' => 'center',
+			'forced' => '1',
+			'class' => 'center',
+			'toggle' => 'e-multiselect',
+		),
+		'id' => array (
+			'title' => LAN_ID,
+			'data' => 'int',
+			'width' => '5%',
+			'help' => '',
+			'readParms' => '',
+			'writeParms' => '',
+			'class' => 'left',
+			'thclass' => 'left',
+		),
+		'code' => array (
+			'title' => 'Code',
+			'type' => 'textarea',
+			'data' => 'str',
+			'width' => 'auto',
+			'inline' => true,
+			'help' => '',
+			'readParms' => '',
+			'writeParms' => '',
+			'class' => 'left',
+			'thclass' => 'left',
+		),
+		'description' => array (
+			'title' => LAN_DESCRIPTION,
+			'type' => 'text',
+			'data' => 'str',
+			'width' => '40%',
+			'inline' => true,
+			'help' => '',
+			'readParms' => '',
+			'writeParms' => '',
+			'class' => 'left',
+			'thclass' => 'left',
+		),
+		'pages' =>  array (
+			'title' => 'Pages',
+			'type' => 'text',
+			'data' => 'str',
+			'width' => 'auto',
+			'inline' => true,
+			'help' => '',
+			'readParms' => '',
+			'writeParms' => '',
+			'class' => 'left',
+			'thclass' => 'left',
+		),
+		'userclass' => array (
+			'title' => 'Userclass',
+			'type' => 'userclass',
+			'data' => 'str',
+			'width' => 'auto',
+			'inline' => true,
+			'help' => '',
+			'readParms' => '',
+			'writeParms' => '',
+			'class' => 'left',
+			'thclass' => 'left',
+		),
+		'options' => array (
+			'title' => LAN_OPTIONS,
+			'type' => null,
+			'data' => null,
+			'width' => '10%',
+			'thclass' => 'center last',
+			'class' => 'center last',
+			'forced' => '1',
+		),
+	);
 
-$list = "<div style='text-align:center'>
-<table style='width:75%' class='fborder'>";
-if($action == "edit"){
-	$list .= "<tr>
-	<td style='width:5%;' class='fcaption'>".SOPLAN_CONFIG_20."</td>
-	<td style='width:45%;' class='fcaption'>".SOPLAN_CONFIG_21."</td>
-	<td style='width:20%;' class='fcaption'>".SOPLAN_CONFIG_22."</td>
-	<td style='width:20%;' class='fcaption'>".SOPLAN_CONFIG_23."</td>
-	<td style='width:10%;' class='fcaption'>&nbsp;</td>
-	</tr>";
-}else{
-	$list .= "<tr>
-	<td style='width:5%;' class='fcaption'>".SOPLAN_CONFIG_20."</td>
-	<td style='width:55%;' class='fcaption'>".SOPLAN_CONFIG_21."</td>
-	<td style='width:30%;' class='fcaption'>".SOPLAN_CONFIG_22."</td>
-	<td style='width:10%;' class='fcaption'>&nbsp;</td>
-	</tr>";
-}
+	protected $fieldpref = array('description', 'pages', 'userclass');
 
-if($sql->db_Count("showonpages_content", "(*)") > 0){
-	$sql->db_Select("showonpages_content", "*", "ORDER BY id ASC", "no-where");
-	while($row = $sql->db_Fetch()){
-		if($action == "edit" && $id == $row['id']){
-			$list .= "<form method='post' action='".e_SELF."'>
-			<tr>
-			<td class='forumheader3' style='text-align:center;'>".$row['id']."</td>
-			<td class='forumheader3' style='text-align:center;'>".SOPLAN_CONFIG_10." <input type='text' class='tbox' name='description' value='".$row['description']."' /><br /><textarea style='height:".(strlen($row['code']) / 2)."px;' class='tbox' name='code'>".$tp->toForm($row['code'])."</textarea></td>
-			<td class='forumheader3'><input type='text' class='tbox' name='pages' value='".$row['pages']."' /></td>
-			<td class='forumheader3'>".r_userclass('userclass', $row['userclass'], 'off', 'public,nobody,guest,member,admin,main,classes')."</td>
-			<td class='forumheader3' style='text-align:center;'>
-			<input type='hidden' name='id' value='".$row['id']."' />
-			<input type='submit' class='button' name='editcontent' value='".SOPLAN_CONFIG_24."' />
-			</td>
-			</tr>
-			</form>";
-		}else{
-			$list .= "<form method='post' action='".e_SELF."'>
-			<tr>
-			<td class='forumheader3' style='text-align:center;'>".$row['id']."</td>
-			<td class='forumheader3' style='text-align:center;'><a onclick='expandit(\"sopcc_".$row['id']."\");'>".$row['description']."</a><div id='sopcc_".$row['id']."' style='display:none;'><textarea style='height:".(strlen($row['code']) / 2)."px;' class='tbox'>".$tp->toForm($row['code'])."</textarea></div></td>
-			<td class='forumheader3'>".$row['pages']."</td>
-			<td class='forumheader3' style='text-align:center;'>
-			<a href='".e_SELF."?edit.".$row['id']."'>".ADMIN_EDIT_ICON."</a>
-			<input type='image' title='".LAN_DELETE."' name='main_delete[".$row['id']."]' src='".e_PLUGIN."showonpages/images/delete_16.png' onclick=\"return jsconfirm('".SOPLAN_CONFIG_25." [ID: ".$row['id']." ]')\"/>
-			</td>
-			</tr>
-			</form>";
-		}
+	//	protected $preftabs        = array('General', 'Other' );
+	protected $prefs = array(
+	);
+
+	public function init()
+	{
+		// Set drop-down values (if any).
 	}
-}else{
-	$list .= "<tr>
-	<td colspan='4' style='text-align:center;' class='forumheader3'>".SOPLAN_CONFIG_26."</td>
-	</tr>";
-}
-$list .= "</table>
-</div>";
 
-$ns->tablerender(SOPLAN_CONFIGCAPTION_01, $add);
-$ns->tablerender(SOPLAN_CONFIGCAPTION_02, $list);
+	// ------- Customize Create --------
+	public function beforeCreate($new_data)
+	{
+		return $new_data;
+	}
+
+	public function afterCreate($new_data, $old_data, $id)
+	{
+		// do something
+	}
+
+	public function onCreateError($new_data, $old_data)
+	{
+		// do something
+	}
+
+	// ------- Customize Update --------
+	public function beforeUpdate($new_data, $old_data, $id)
+	{
+		return $new_data;
+	}
+
+	public function afterUpdate($new_data, $old_data, $id)
+	{
+		// do something
+	}
+
+	public function onUpdateError($new_data, $old_data, $id)
+	{
+		// do something
+	}
+
+		/*
+		// optional - a custom page.
+		public function customPage()
+		{
+			$text = 'Hello World!';
+			return $text;
+		}
+		*/
+}
+
+class showonpages_content_form_ui extends e_admin_form_ui
+{
+}
+
+new showonpages_adminArea();
+
+require_once(e_ADMIN."auth.php");
+e107::getAdminUI()->runPage();
 
 require_once(e_ADMIN."footer.php");
+exit;
 ?>
