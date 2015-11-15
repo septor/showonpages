@@ -12,6 +12,7 @@ if (!getperms('P'))
 	header('location:'.e_BASE.'index.php');
 	exit;
 }
+e107::lan('showonpages', 'admin', true);
 
 class showonpages_adminArea extends e_admin_dispatcher
 {
@@ -25,8 +26,8 @@ class showonpages_adminArea extends e_admin_dispatcher
 	);
 
 	protected $adminMenu = array(
-		'main/list'			=> array('caption'=> 'Manage Content Codes', 'perm' => 'P'),
-		'main/create'		=> array('caption'=> 'Create New Content Code', 'perm' => 'P'),
+		'main/list'			=> array('caption'=> LAN_SHOWONPAGES_MANAGE, 'perm' => 'P'),
+		'main/create'		=> array('caption'=> LAN_SHOWONPAGES_CREATE, 'perm' => 'P'),
 	);
 
 	protected $adminMenuAliases = array(
@@ -76,12 +77,12 @@ class showonpages_content_ui extends e_admin_ui
 			'thclass' => 'left',
 		),
 		'code' => array (
-			'title' => 'Code',
-			'type' => 'textarea',
+			'title' => LAN_SHOWONPAGES_CODE_01_A,
+			'type' => 'bbarea',
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
-			'help' => '',
+			'help' => LAN_SHOWONPAGES_CODE_01_B,
 			'readParms' => '',
 			'writeParms' => '',
 			'class' => 'left',
@@ -93,26 +94,26 @@ class showonpages_content_ui extends e_admin_ui
 			'data' => 'str',
 			'width' => '40%',
 			'inline' => true,
-			'help' => '',
+			'help' => LAN_SHOWONPAGES_CODE_02,
 			'readParms' => '',
 			'writeParms' => '',
 			'class' => 'left',
 			'thclass' => 'left',
 		),
 		'pages' =>  array (
-			'title' => 'Pages',
+			'title' => LAN_SHOWONPAGES_CODE_03_A,
 			'type' => 'text',
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
-			'help' => '',
+			'help' => LAN_SHOWONPAGES_CODE_03_B,
 			'readParms' => '',
 			'writeParms' => '',
 			'class' => 'left',
 			'thclass' => 'left',
 		),
 		'userclass' => array (
-			'title' => 'Userclass',
+			'title' => LAN_USERCLASS,
 			'type' => 'userclass',
 			'data' => 'str',
 			'width' => 'auto',

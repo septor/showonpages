@@ -2,24 +2,6 @@
 
 Below is a list of some examples that could be benefical to new users. This file will more than likely get updated from time to time to either add new examples, clean up existing examples, or to remove examples that no longer work correctly.
 
-
-## Wibiya Toolbar
-
-You can use ShowOnPages to add the Wibiya Toolbar to your website by following the below instructions:
-
-1. Head on over to the [Wibiya](http://wibiya.conduit.com/) website and create an account.
-2. Set up you toolbar.
-3. After everything is set up you're going to want to install the toolbar. To do this you need to select the button at the bottom that looks like this: `< / >`.
-4. Copy the code you are given to your clipboard.
-5. Now navigate (in a different tab so you don't accidentally lose your toolbar code) to the ShowOnPages configuration page.
-6. Enter your Wibiya Toolbar code inside the `Content Code` box.
-7. Enter `Wibiya Toolbar` as the description (or whatever you like, this just seems the most fitting to me!).
-8. Decide which pages you want the toolbar to display on. If you want it to display on all your pages simply enter `*` in the box.
-9. Decide which userclass you want the toolbar to display for. Set it to `Everyone (Public)` if you want everyone to see it.
-
-Congratulations. Your site now has a Wibiya Toolbar.
-
-
 ## Wowhead Tooltip Support
 
 You can use ShowOnPages to enable Wowhead Tooltips on your website be doing the following:
@@ -36,4 +18,4 @@ Congratulations. Your site now has Wowhead Tooltip support!
 
 # Get your examples on this page!
 
-If you have an example of something that you think would benefit someone else feel free to let me know about it! You can either message me on GitHub or send me a [PM](http://e107.org/e107_plugins/pm/pm.php?send.37) on e107.org and I'll get it added!
+If you have an example of something that you think would benefit someone else feel free to let me know about it! Either hit me up on [Twitter](https://twitter.com/septor/) or create a new Gist and open an issue in the issue tracker linking to the Gist!
