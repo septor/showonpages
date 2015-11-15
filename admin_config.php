@@ -78,7 +78,7 @@ class showonpages_content_ui extends e_admin_ui
 		),
 		'code' => array (
 			'title' => LAN_SHOWONPAGES_CODE_01_A,
-			'type' => 'bbarea',
+			'type' => 'textarea',
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
