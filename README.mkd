@@ -1,3 +1,18 @@
+# Attention!
+
+ShowOnPages will be undergoing some rather significant changes. If you are using the plugin **right now**, you'll want to ease back a bit unless you're willing to reinstall later. There is a decent discussion taking place [here](https://github.com/septor/showonpages/issues/2) about the direction ShowOnPages will be taking. In short, the following will eventually be happening:
+
+* Content Codes will be split up into JavaScript and CSS Content Codes.
+* You will be able to include remote (or local) files as well as code snippets.
+* The pages you display code on can be more directly picked.
+  * You will be able to display it **only** on the `manage.php` of a single plugin, instead of all `manage.php`'s.
+  * You will be able to display it on GET parameters of pages `manage.php?id.5`.
+  * You will be able to still display it on **all** `manage.php`'s.
+
+Due to the nature of the changes in store you **will be required to reinstall the plugin**. It's probably possible to avoid this, but I'm not going to research the best way to handle it. Your current content codes could be a mix of CSS, JS, snippets, files, whatever. I don't want, and you don't need, the trouble it could cause.
+
+Keep an eye on the issue linked above, and feel free to contribute your thoughts, and the commits forthcoming for progress and updates!
+
 # ShowOnPages
 
 ShowOnPages allows you to display code on every page of your e107 installation. It also lets you display the same code only on some pages. Add in the ability to limit the displaying based on userclass and you're given one powerful tool for your website.
