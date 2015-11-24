@@ -41,20 +41,13 @@ class showonpages_content_ui extends e_admin_ui
 {
 	protected $pluginTitle		= 'ShowOnPages';
 	protected $pluginName		= 'showonpages';
-	//	protected $eventName		= 'showonpages-showonpages_content'; // remove comment to enable event triggers in admin.
 	protected $table			= 'showonpages_content';
 	protected $pid				= 'id';
 	protected $perPage			= 10;
 	protected $batchDelete		= true;
-	//	protected $batchCopy		= true;
-	//	protected $sortField		= 'somefield_order';
-	//	protected $orderStep		= 10;
-	//	protected $tabs				= array('Tabl 1','Tab 2'); // Use 'tab'=>0  OR 'tab'=>1 in the $fields below to enable.
-
-	//	protected $listQry      	= "SELECT * FROM `#tableName` WHERE field != '' "; // Example Custom Query. LEFT JOINS allowed. Should be without any Order or Limit.
-
 	protected $listOrder		= 'id DESC';
 
+	protected $tabs = array('General', 'JavaScript', 'CSS');
 	protected $fields = array (
 		'checkboxes' =>  array (
 			'title' => '',
@@ -76,13 +69,53 @@ class showonpages_content_ui extends e_admin_ui
 			'class' => 'left',
 			'thclass' => 'left',
 		),
-		'code' => array (
-			'title' => LAN_SHOWONPAGES_CODE_01_A,
+		'csscode' => array (
+			'title' => 'Code Snippet',
 			'type' => 'textarea',
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
+			'tab' => 2,
 			'help' => LAN_SHOWONPAGES_CODE_01_B,
+			'readParms' => '',
+			'writeParms' => '',
+			'class' => 'left',
+			'thclass' => 'left',
+		),
+		'cssfile' => array (
+			'title' => 'Files',
+			'type' => 'text',
+			'data' => 'str',
+			'width' => 'auto',
+			'inline' => true,
+			'tab' => 2,
+			'help' => 'A list of files to include. They can be remote or local, full path required. Use a comma to separate.',
+			'readParms' => '',
+			'writeParms' => '',
+			'class' => 'left',
+			'thclass' => 'left',
+		),
+		'jscode' => array (
+			'title' => 'Code Snippet',
+			'type' => 'textarea',
+			'data' => 'str',
+			'width' => 'auto',
+			'inline' => true,
+			'tab' => 1,
+			'help' => LAN_SHOWONPAGES_CODE_04_B,
+			'readParms' => '',
+			'writeParms' => '',
+			'class' => 'left',
+			'thclass' => 'left',
+		),
+		'jsfile' => array (
+			'title' => 'Files',
+			'type' => 'text',
+			'data' => 'str',
+			'width' => 'auto',
+			'inline' => true,
+			'tab' => 1,
+			'help' => 'A list of files to include. They can be remote or local, full path required. Use a comma to separate.',
 			'readParms' => '',
 			'writeParms' => '',
 			'class' => 'left',
@@ -94,6 +127,7 @@ class showonpages_content_ui extends e_admin_ui
 			'data' => 'str',
 			'width' => '40%',
 			'inline' => true,
+			'tab' => 0,
 			'help' => LAN_SHOWONPAGES_CODE_02,
 			'readParms' => '',
 			'writeParms' => '',
@@ -106,6 +140,7 @@ class showonpages_content_ui extends e_admin_ui
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
+			'tab' => 0,
 			'help' => LAN_SHOWONPAGES_CODE_03_B,
 			'readParms' => '',
 			'writeParms' => '',
@@ -118,7 +153,8 @@ class showonpages_content_ui extends e_admin_ui
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
-			'help' => '',
+			'tab' => 0,
+			'help' => 'The userclass you want affected by the Content Code.',
 			'readParms' => '',
 			'writeParms' => '',
 			'class' => 'left',
@@ -146,36 +182,49 @@ class showonpages_content_ui extends e_admin_ui
 		// Set drop-down values (if any).
 	}
 
-	// ------- Customize Create --------
 	public function beforeCreate($new_data)
 	{
+		$new_data['csscode'] = e107::getParser()->toDb($new_data['csscode'], true, false, 'no_html');
+		$new_data['jscode'] = e107::getParser()->toDb($new_data['jscode'], true, false, 'no_html');
 		return $new_data;
 	}
 
 	public function afterCreate($new_data, $old_data, $id)
 	{
-		// do something
 	}
 
 	public function onCreateError($new_data, $old_data)
 	{
-		// do something
 	}
 
 	// ------- Customize Update --------
 	public function beforeUpdate($new_data, $old_data, $id)
 	{
+		if($old_data['csscode'] == "")
+		{
+			$new_data['csscode'] = e107::getParser()->toDb($old_data['csscode'], true, false, 'no_html');
+		}
+		else
+		{
+			$new_data['csscode'] = $old_data['csscode'];
+		}
+		if($old_data['jscode'] == "")
+		{
+			$new_data['jscode'] = e107::getParser()->toDb($old_dat['jscode'], true, false, 'no_html');
+		}
+		else
+		{
+			$new_data['jscode'] = $old_data['jscode'];
+		}
 		return $new_data;
 	}
 
 	public function afterUpdate($new_data, $old_data, $id)
 	{
-		// do something
 	}
 
 	public function onUpdateError($new_data, $old_data, $id)
 	{
-		// do something
 	}
 
 		/*
