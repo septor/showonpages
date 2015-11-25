@@ -2,7 +2,8 @@
 
 ShowOnPages will be undergoing some rather significant changes. If you are using the plugin **right now**, you'll want to ease back a bit unless you're willing to reinstall later. There is a decent discussion taking place [here](https://github.com/septor/showonpages/issues/2) about the direction ShowOnPages will be taking. In short, the following will eventually be happening:
 
-* Content Codes will be split up into JavaScript and CSS Content Codes.
+* You will be able to include snippets of code, either JavaScript or CSS.
+* Meta tags will also be supported, through not very heavily since it's also a core feature.
 * You will be able to include remote (or local) files as well as code snippets.
 * The pages you display code on can be more directly picked.
   * You will be able to display it **only** on the `manage.php` of a single plugin, instead of all `manage.php`'s.
@@ -19,20 +20,7 @@ ShowOnPages allows you to display code on every page of your e107 installation. 
 
 ## How To Use
 
-Using ShowOnPages is extremely easy and requires very little effort. Follow the below steps to create a simple Content Code Listing:
-
-1. Navigate to the configuration page.
-2. Enter the code you want to display in the `<head>` section of your site in the `Content Code` box.
-3. Enter a description of the content code in the `Description` box. This will be used later on on the configuration page as well as displayed as an HTML comment before the Content Code.
-4. Enter which pages you want the code to be displayed on. Forum pages can be linked together using `forum.php`. You can use the `*` character to default to all pages.
-5. Select a userclass that will be able to see the code.
-6. Click the `Create` button to add the entry to the database.
-
-
-## Examples
-
-Because this plugin will allow you to do so much I've went ahead and written some examples that you can find [here](https://github.com/septor/showonpages/blob/master/EXAMPLES.mkd).
-
+_This section is outdated for the changes to come. If you are using the current ShowOnPages version and need assistance, feel free to contact me via [Twitter](http://twitter.com/septor/])._
 
 # Warnings
 
