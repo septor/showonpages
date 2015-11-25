@@ -8,41 +8,31 @@
  */
 if (!defined('e107_INIT')) { exit; }
 $sql = e107::getDb();
-
-// Get the page we're on.
+$tp = e107::getParser();
 $currentPage = substr(strrchr($_SERVER['PHP_SELF'], "/"), 1);
 
-// Cycle through the database and pull up all the Content Code listings.
 if($sql->count("showonpages_content", "(*)") > 0)
 {
-	$sql->select("showonpages_content", "*", "ORDER BY id ASC", "no-where");
+	$sql->select("showonpages_content", "*", "ORDER BY order ASC", "no-where");
 	while($row = $sql->fetch())
 	{
-		// If the Content Code is suppose to be displayed on every page, let's just get to it.
 		if($row['pages'] == "*" && check_class($row['userclass']))
 		{
-			echo "\n\n<!-- ShowOnPages Content Codes  -->";
-			echo "\n<!-- ".$row['description']." -->\n";
-			echo html_entity_decode($row['code'])."\n\n";
+			// TODO: Probably error checking to make sure the code being displayed works with the position selected.
+			if($row['type'] == 'js') e107::js($row['position'], $tp->toHtml($row['code']), 'jquery');
+			else if($row['type'] == 'css') e107::css($row['position'], $tp->toHtml($row['code']));
+			else if($row['type'] == 'meta') e107::meta($row['position'], $tp->toHtml($row['code']));
 		}
-		// Otherwise, let's get serious.
 		else
 		{
-			// We need to make an array of all the pages that the code can be displayed on.
 			$allowedPages = explode(",", $row['pages']);
 
-			// If the a page is "forum.php" we need to make sure that if the visitor is on any forum page that they are given the code too.
-			if(in_array("forum.php", $allowedPages))
-			{
-				$currentPage = str_replace(array("_viewforum", "_viewtopic"), array("", ""), $currentPage);
-			}
-
-			// Now the good stuff, if the current page is in the array of pages to display the code, let's get to work!
 			if(in_array($currentPage, $allowedPages) && check_class($row['userclass']))
 			{
-				echo "\n\n<!-- ShowOnPages Content Codes  -->";
-				echo "\n<!-- ".$row['description']." -->\n";
-				echo html_entity_decode($row['code'])."\n\n";
+				// TODO: Probably error checking to make sure the code being displayed works with the position selected.
+				if($row['type'] == 'js') e107::js($row['position'], $tp->toHtml($row['code']), 'jquery');
+				else if($row['type'] == 'css') e107::css($row['position'], $tp->toHtml($row['code']));
+				else if($row['type'] == 'meta') e107::meta($row['position'], $tp->toHtml($row['code']));
 			}
 		}
 	}

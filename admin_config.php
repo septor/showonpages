@@ -47,7 +47,6 @@ class showonpages_content_ui extends e_admin_ui
 	protected $batchDelete		= true;
 	protected $listOrder		= 'id DESC';
 
-	protected $tabs = array('General', 'JavaScript', 'CSS');
 	protected $fields = array (
 		'checkboxes' =>  array (
 			'title' => '',
@@ -69,53 +68,59 @@ class showonpages_content_ui extends e_admin_ui
 			'class' => 'left',
 			'thclass' => 'left',
 		),
-		'csscode' => array (
-			'title' => 'Code Snippet',
-			'type' => 'textarea',
+		'type' => array (
+			'title' => 'Code Type',
+			'type' => 'text',
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
-			'tab' => 2,
-			'help' => LAN_SHOWONPAGES_CODE_01_B,
+			'help' => 'The type of code you want displayed.',
 			'readParms' => '',
-			'writeParms' => '',
+			'writeParms' => array('optArray' => array(
+				'js' => 'js',
+				'css' => 'css',
+				'meta' => 'meta',
+			)),
 			'class' => 'left',
 			'thclass' => 'left',
 		),
-		'cssfile' => array (
+		'position' => array(
 			'title' => 'Files',
 			'type' => 'text',
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
-			'tab' => 2,
-			'help' => 'A list of files to include. They can be remote or local, full path required. Use a comma to separate.',
+			'help' => 'The position the code will be in. "inline", "url", etc.',
 			'readParms' => '',
-			'writeParms' => '',
+			'writeParms' => array('optArray' => array(
+				'header' => 'header',
+				'header_inline' => 'header_inline',
+				'footer' => 'footer',
+				'footer_inline' => 'footer_inline',
+				'url' => 'url',
+			)),
 			'class' => 'left',
 			'thclass' => 'left',
 		),
-		'jscode' => array (
-			'title' => 'Code Snippet',
+		'code' => array (
+			'title' => 'Content Code',
 			'type' => 'textarea',
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
-			'tab' => 1,
-			'help' => LAN_SHOWONPAGES_CODE_04_B,
+			'help' => 'The code you want displayed.',
 			'readParms' => '',
 			'writeParms' => '',
 			'class' => 'left',
 			'thclass' => 'left',
 		),
-		'jsfile' => array (
-			'title' => 'Files',
+		'order' => array(
+			'title' => 'Order',
 			'type' => 'text',
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
-			'tab' => 1,
-			'help' => 'A list of files to include. They can be remote or local, full path required. Use a comma to separate.',
+			'help' => 'The order you want the code to be displayed in relevance to other Content Codes.',
 			'readParms' => '',
 			'writeParms' => '',
 			'class' => 'left',
@@ -171,21 +176,18 @@ class showonpages_content_ui extends e_admin_ui
 		),
 	);
 
-	protected $fieldpref = array('description', 'pages', 'userclass');
+	protected $fieldpref = array('type', 'position', 'description', 'pages', 'userclass');
 
-	//	protected $preftabs        = array('General', 'Other' );
 	protected $prefs = array(
 	);
 
 	public function init()
 	{
-		// Set drop-down values (if any).
 	}
 
 	public function beforeCreate($new_data)
 	{
-		$new_data['csscode'] = e107::getParser()->toDb($new_data['csscode'], true, false, 'no_html');
-		$new_data['jscode'] = e107::getParser()->toDb($new_data['jscode'], true, false, 'no_html');
+		$new_data['code'] = e107::getParser()->toDb($new_data['code'], true, false, 'no_html');
 		return $new_data;
 	}
 
@@ -200,21 +202,13 @@ class showonpages_content_ui extends e_admin_ui
 	// ------- Customize Update --------
 	public function beforeUpdate($new_data, $old_data, $id)
 	{
-		if($old_data['csscode'] == "")
+		if($old_data['code'] == "")
 		{
-			$new_data['csscode'] = e107::getParser()->toDb($old_data['csscode'], true, false, 'no_html');
+			$new_data['code'] = e107::getParser()->toDb($old_dat['code'], true, false, 'no_html');
 		}
 		else
 		{
-			$new_data['csscode'] = $old_data['csscode'];
-		}
-		if($old_data['jscode'] == "")
-		{
-			$new_data['jscode'] = e107::getParser()->toDb($old_dat['jscode'], true, false, 'no_html');
-		}
-		else
-		{
-			$new_data['jscode'] = $old_data['jscode'];
+			$new_data['code'] = $old_data['code'];
 		}
 		return $new_data;
 	}
