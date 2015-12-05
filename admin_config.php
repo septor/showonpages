@@ -70,7 +70,7 @@ class showonpages_content_ui extends e_admin_ui
 		),
 		'type' => array (
 			'title' => 'Code Type',
-			'type' => 'text',
+			'type' => 'dropdown',
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
@@ -85,8 +85,8 @@ class showonpages_content_ui extends e_admin_ui
 			'thclass' => 'left',
 		),
 		'position' => array(
-			'title' => 'Files',
-			'type' => 'text',
+			'title' => 'Code Position',
+			'type' => 'dropdown',
 			'data' => 'str',
 			'width' => 'auto',
 			'inline' => true,
