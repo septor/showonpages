@@ -13,15 +13,16 @@ $currentPage = substr(strrchr($_SERVER['PHP_SELF'], "/"), 1);
 
 if($sql->count("showonpages_content", "(*)") > 0)
 {
-	$sql->select("showonpages_content", "*", "ORDER BY order ASC", "no-where");
+	$sql->gen("SELECT * FROM #showonpages_content ORDER BY `order` ASC");
 	while($row = $sql->fetch())
 	{
 		if($row['pages'] == "*" && check_class($row['userclass']))
 		{
 			// TODO: Probably error checking to make sure the code being displayed works with the position selected.
-			if($row['type'] == 'js') e107::js($row['position'], $tp->toHtml($row['code']), 'jquery');
-			else if($row['type'] == 'css') e107::css($row['position'], $tp->toHtml($row['code']));
-			else if($row['type'] == 'meta') e107::meta($row['position'], $tp->toHtml($row['code']));
+			$code = ($row['position'] == 'url' ? $row['code'] : $tp->toHtml($row['code']));
+			if($row['type'] == 'js') e107::js($row['position'], $code, 'jquery');
+			else if($row['type'] == 'css') e107::css($row['position'], $code);      
+			else if($row['type'] == 'meta') e107::meta($row['position'], $code);
 		}
 		else
 		{
@@ -30,12 +31,11 @@ if($sql->count("showonpages_content", "(*)") > 0)
 			if(in_array($currentPage, $allowedPages) && check_class($row['userclass']))
 			{
 				// TODO: Probably error checking to make sure the code being displayed works with the position selected.
-				if($row['type'] == 'js') e107::js($row['position'], $tp->toHtml($row['code']), 'jquery');
-				else if($row['type'] == 'css') e107::css($row['position'], $tp->toHtml($row['code']));
-				else if($row['type'] == 'meta') e107::meta($row['position'], $tp->toHtml($row['code']));
+				$code = ($row['position'] == 'url' ? $row['code'] : $to->toHtml($row['code']));
+				if($row['type'] == 'js') e107::js($row['position'], $code, 'jquery');
+				else if($row['type'] == 'css') e107::css($row['position'], $code);      
+				else if($row['type'] == 'meta') e107::meta($row['position'], $code);
 			}
 		}
 	}
 }
-
-?>

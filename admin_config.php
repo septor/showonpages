@@ -93,6 +93,7 @@ class showonpages_content_ui extends e_admin_ui
 			'help' => 'The position the code will be in. "inline", "url", etc.',
 			'readParms' => '',
 			'writeParms' => array('optArray' => array(
+				'inline' => 'inline',
 				'header' => 'header',
 				'header_inline' => 'header_inline',
 				'footer' => 'footer',
@@ -116,8 +117,8 @@ class showonpages_content_ui extends e_admin_ui
 		),
 		'order' => array(
 			'title' => 'Order',
-			'type' => 'text',
-			'data' => 'str',
+			'type' => 'number',
+			'data' => 'int',
 			'width' => 'auto',
 			'inline' => true,
 			'help' => 'The order you want the code to be displayed in relevance to other Content Codes.',
