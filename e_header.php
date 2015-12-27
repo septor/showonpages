@@ -11,7 +11,7 @@ $sql = e107::getDb();
 $tp = e107::getParser();
 $currentPage = substr(strrchr($_SERVER['PHP_SELF'], "/"), 1);
 
-if($sql->count("showonpages_content", "(*)") > 0)
+if($sql->count("showonpages_content", "(*)") > 0 && USER_AREA)
 {
 	$sql->gen("SELECT * FROM #showonpages_content ORDER BY `order` ASC");
 	while($row = $sql->fetch())
