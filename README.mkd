@@ -6,9 +6,11 @@ ShowOnPages will be undergoing some rather significant changes. If you are using
 * Meta tags will also be supported, through not very heavily since it's also a core feature.
 * You will be able to include remote (or local) files as well as code snippets.
 * The pages you display code on can be more directly picked.
-  * You will be able to display it **only** on the `manage.php` of a single plugin, instead of all `manage.php`'s.
-  * You will be able to display it on GET parameters of pages `manage.php?id.5`.
-  * You will be able to still display it on **all** `manage.php`'s.
+  * A preference will allow you to choose the type of pages you want your code to affect.
+  * Setting the preference to `exact` allows you to directly impact a plugin and GET page types.
+    * `e107_plugins/log/stats.php?1` can have different content than `e107_plugins/log/stats.php?2`
+  * Setting the preference to `lax` will make ShowOnPages perform exactly how it does now.
+  * The two settings cannot be merged. Depending on your preference `bear.php,pig.php` in the pages field could perform differently!
 
 Due to the nature of the changes in store you **will be required to reinstall the plugin**. It's probably possible to avoid this, but I'm not going to research the best way to handle it. Your current content codes could be a mix of CSS, JS, snippets, files, whatever. I don't want, and you don't need, the trouble it could cause.
 
