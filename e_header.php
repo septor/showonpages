@@ -9,7 +9,11 @@
 if (!defined('e107_INIT')) { exit; }
 $sql = e107::getDb();
 $tp = e107::getParser();
-$currentPage = substr(strrchr($_SERVER['PHP_SELF'], "/"), 1);
+
+if(e107::pref('showonpages', 'pageType') == 'lax')
+	$currentPage = substr(strrchr($_SERVER['PHP_SELF'], "/"), 1);
+else
+	$currentPage = str_replace(SITEURL, '', SITEURLBASE.e_REQUEST_URI);
 
 if($sql->count("showonpages_content", "(*)") > 0 && USER_AREA)
 {

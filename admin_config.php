@@ -177,7 +177,18 @@ class showonpages_content_ui extends e_admin_ui
 		),
 	);
 
-	protected $prefs = array();
+	protected $prefs = array(
+		'pageType' => array(
+			'title' => 'Page Matching Type',
+			'type' => 'dropdown',
+			'data' => 'str',
+			'writeParms' => array('optArray' => array(
+				'exact' => 'Exact URL',
+				'lax' => 'Any page.php loaded',
+			)),
+			'help' => 'Refer to the README file for more information',
+		),
+	);
 
 	public function init()
 	{

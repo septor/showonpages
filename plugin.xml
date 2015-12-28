@@ -16,4 +16,7 @@
 	<adminLinks>
 		<link url="admin_config.php" description="" icon="" iconSmall="" primary="true" >LAN_CONFIGURE</link>
 	</adminLinks>
+	<pluginPrefs>
+		<pref name='pageType'>exact</pref>
+	</pluginPrefs>
 </e107Plugin>

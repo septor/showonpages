@@ -1,6 +1,6 @@
 # Attention!
 
-ShowOnPages will be undergoing some rather significant changes. If you are using the plugin **right now**, you'll want to ease back a bit unless you're willing to reinstall later. There is a decent discussion taking place [here](https://github.com/septor/showonpages/issues/2) about the direction ShowOnPages will be taking. In short, the following will eventually be happening:
+ShowOnPages will be undergoing some rather significant changes. If you are using the plugin **right now**, you'll want to ease back a bit unless you're willing to reinstall later. There is a decent discussion taking place [here](https://github.com/septor/showonpages/issues/2) and [here](https://github.com/septor/showonpages/issues/4) about the direction ShowOnPages will be taking. In short, the following will eventually be happening:
 
 * You will be able to include snippets of code, either JavaScript or CSS.
 * Meta tags will also be supported, through not very heavily since it's also a core feature.
