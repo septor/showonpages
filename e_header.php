@@ -20,25 +20,33 @@ if($sql->count("showonpages_content", "(*)") > 0 && USER_AREA)
 	$sql->gen("SELECT * FROM #showonpages_content ORDER BY `order` ASC");
 	while($row = $sql->fetch())
 	{
-		if($row['pages'] == "*" && check_class($row['userclass']))
-		{
-			// TODO: Probably error checking to make sure the code being displayed works with the position selected.
-			$code = ($row['position'] == 'url' ? $row['code'] : $tp->toHtml($row['code']));
-			if($row['type'] == 'js') e107::js($row['position'], $code);
-			else if($row['type'] == 'css') e107::css($row['position'], $code);      
-			else if($row['type'] == 'meta') e107::meta($row['position'], $code);
-		}
+		if($row['users'] == "*" && USER)
+			$affectedUsers = USERNAME;
 		else
-		{
-			$allowedPages = explode(",", $row['pages']);
+			$affectedUsers = explode(',', $row['users']);
 
-			if(in_array($currentPage, $allowedPages) && check_class($row['userclass']))
+		if(in_array(USERNAME, $affectedUsers))
+		{
+			if($row['pages'] == "*" && check_class($row['userclass']))
 			{
 				// TODO: Probably error checking to make sure the code being displayed works with the position selected.
-				$code = ($row['position'] == 'url' ? $row['code'] : $to->toHtml($row['code']));
+				$code = ($row['position'] == 'url' ? $row['code'] : $tp->toHtml($row['code']));
 				if($row['type'] == 'js') e107::js($row['position'], $code);
-				else if($row['type'] == 'css') e107::css($row['position'], $code);      
+				else if($row['type'] == 'css') e107::css($row['position'], $code);
 				else if($row['type'] == 'meta') e107::meta($row['position'], $code);
+			}
+			else
+			{
+				$allowedPages = explode(',', $row['pages']);
+	
+				if(in_array($currentPage, $allowedPages) && check_class($row['userclass']))
+				{
+					// TODO: Probably error checking to make sure the code being displayed works with the position selected.
+					$code = ($row['position'] == 'url' ? $row['code'] : $to->toHtml($row['code']));
+					if($row['type'] == 'js') e107::js($row['position'], $code);
+					else if($row['type'] == 'css') e107::css($row['position'], $code);
+					else if($row['type'] == 'meta') e107::meta($row['position'], $code);
+				}
 			}
 		}
 	}

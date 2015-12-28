@@ -6,6 +6,7 @@ CREATE TABLE showonpages_content (
 	`code` text,
 	`description` varchar(250) default NULL,
 	`pages` varchar(250) NOT NULL default '',
+	`users` varchar(250) NOT NULL default '',
 	`userclass` varchar(250) NOT NULL default '',
 	PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
