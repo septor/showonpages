@@ -177,10 +177,7 @@ class showonpages_content_ui extends e_admin_ui
 		),
 	);
 
-	protected $fieldpref = array('type', 'position', 'description', 'pages', 'userclass');
-
-	protected $prefs = array(
-	);
+	protected $prefs = array();
 
 	public function init()
 	{

@@ -20,7 +20,7 @@ if($sql->count("showonpages_content", "(*)") > 0 && USER_AREA)
 		{
 			// TODO: Probably error checking to make sure the code being displayed works with the position selected.
 			$code = ($row['position'] == 'url' ? $row['code'] : $tp->toHtml($row['code']));
-			if($row['type'] == 'js') e107::js($row['position'], $code, 'jquery');
+			if($row['type'] == 'js') e107::js($row['position'], $code);
 			else if($row['type'] == 'css') e107::css($row['position'], $code);      
 			else if($row['type'] == 'meta') e107::meta($row['position'], $code);
 		}
@@ -32,7 +32,7 @@ if($sql->count("showonpages_content", "(*)") > 0 && USER_AREA)
 			{
 				// TODO: Probably error checking to make sure the code being displayed works with the position selected.
 				$code = ($row['position'] == 'url' ? $row['code'] : $to->toHtml($row['code']));
-				if($row['type'] == 'js') e107::js($row['position'], $code, 'jquery');
+				if($row['type'] == 'js') e107::js($row['position'], $code);
 				else if($row['type'] == 'css') e107::css($row['position'], $code);      
 				else if($row['type'] == 'meta') e107::meta($row['position'], $code);
 			}
